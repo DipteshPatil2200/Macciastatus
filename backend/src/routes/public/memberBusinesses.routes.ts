@@ -1,0 +1,1 @@
+import {Router} from 'express';import {getPublicMemberBusiness,getPublicMemberBusinesses} from '../../controllers/public/memberBusinesses.controller';const router=Router();router.get('/',getPublicMemberBusinesses);router.get('/:slug',getPublicMemberBusiness);export default router;

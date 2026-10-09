@@ -1,0 +1,1 @@
+import {Router} from 'express';import {submitMembershipEnquiry} from '../../controllers/public/membershipEnquiry.controller';import {contactLimiter} from '../../middleware/rateLimit';const router=Router();router.post('/',contactLimiter,submitMembershipEnquiry);export default router;

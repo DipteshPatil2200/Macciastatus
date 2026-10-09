@@ -1,0 +1,1 @@
+import {Router} from 'express';import {protect,adminOnly} from '../../middleware/auth';import {listMembershipEnquiries} from '../../controllers/admin/membershipEnquiries.controller';const router=Router();router.use(protect,adminOnly);router.get('/',listMembershipEnquiries);export default router;

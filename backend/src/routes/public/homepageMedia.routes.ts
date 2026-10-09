@@ -1,0 +1,1 @@
+import {Router} from 'express';import {getPublicHomepageMedia} from '../../controllers/public/homepageMedia.controller';const router=Router();router.get('/',getPublicHomepageMedia);export default router;
