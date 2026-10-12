@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 export const getAllVenues = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const venues = await Venue.find({ isActive: true }).sort({ createdAt: -1 });
+    const venues = await Venue.find().sort({ displayOrder: 1, createdAt: -1 });
     res.status(200).json({ success: true, data: venues });
   } catch (error) {
     next(error);

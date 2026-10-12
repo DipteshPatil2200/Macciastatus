@@ -27,7 +27,7 @@ export const getAllEvents = async (req: Request, res: Response, next: NextFuncti
     }
 
     const [events, total] = await Promise.all([
-      Event.find(query).sort({ date: -1 }).skip(skip).limit(Number(limit)),
+      Event.find(query).sort({ displayOrder: 1, date: -1 }).skip(skip).limit(Number(limit)),
       Event.countDocuments(query),
     ]);
 

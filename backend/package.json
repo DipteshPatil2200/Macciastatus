@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "seed": "tsx src/seed/seed.ts",
+    "seed:temporary": "tsx src/seed/temporaryContent.ts",
     "test": "tsx --test src/**/*.test.ts",
     "lint": "eslint . --ext .ts --quiet"
   },

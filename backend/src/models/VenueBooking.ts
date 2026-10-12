@@ -31,7 +31,7 @@ const VenueBookingSchema: Schema = new Schema(
     duration: { type: String, required: true },
     eventDate: { type: Date, required: true },
     preferredTime: { type: String, required: true },
-    attendees: { type: Number, required: true },
+    attendees: { type: Number, required: true, min: 1 },
     description: { type: String, required: true },
     status: {
       type: String,

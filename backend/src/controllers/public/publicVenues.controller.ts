@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 export const getVenues = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const venues = await Venue.find({ isActive: true }).sort({ createdAt: -1 });
+    const venues = await Venue.find({ isActive: true }).sort({ displayOrder: 1, createdAt: -1 });
     res.status(200).json({ success: true, data: venues });
   } catch (error) {
     next(error);
@@ -49,7 +49,7 @@ export const bookVenue = async (req: Request, res: Response, next: NextFunction)
     } = req.body;
 
     // Validation
-    if (!fullName || !email || !mobile || !venueId || !eventDate || !preferredTime || !attendees || !description) {
+    if (!fullName || !company || !email || !mobile || !city || !venueId || !duration || !eventDate || !preferredTime || !attendees || !description) {
       return next(createError(400, 'Required fields missing'));
     }
 
@@ -59,6 +59,11 @@ export const bookVenue = async (req: Request, res: Response, next: NextFunction)
 
     const venue = await Venue.findOne({ _id: venueId, isActive: true });
     if (!venue) return next(createError(404, 'Venue not found'));
+
+    const attendeeCount = Number(attendees);
+    if (!Number.isInteger(attendeeCount) || attendeeCount < 1 || attendeeCount > venue.capacity) {
+      return next(createError(400, `Attendees must be between 1 and ${venue.capacity}`));
+    }
 
     const requestedDate = new Date(eventDate);
     if (Number.isNaN(requestedDate.getTime()) || requestedDate <= new Date()) {
@@ -86,7 +91,7 @@ export const bookVenue = async (req: Request, res: Response, next: NextFunction)
       duration,
       eventDate: requestedDate,
       preferredTime,
-      attendees,
+      attendees: attendeeCount,
       description,
     });
 

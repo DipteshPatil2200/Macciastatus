@@ -37,7 +37,7 @@ npm start
 
 Health check: `GET /health` should return HTTP 200.
 
-## Frontend configuration
+## Frontend configuration (Vercel)
 
 Set `VITE_API_URL` to the public backend origin when frontend and API are deployed on different origins. Leave it blank when a reverse proxy serves `/api` and `/uploads` from the same origin.
 
@@ -48,6 +48,12 @@ npm run build
 ```
 
 Deploy `frontend/dist` to a static host and configure SPA fallback so unknown paths serve `index.html`.
+
+The repository-root `vercel.json` is configured for the actual project layout: dependencies are installed in `frontend`, the Vite production build runs there, the output is `frontend/dist`, and all client routes fall back to `index.html`. In Vercel, keep the project root at the repository root and set `VITE_API_URL` for Production and Preview.
+
+The Express/MongoDB backend is intentionally not packaged as a Vercel serverless function. Deploy `backend` to a persistent Node service with a persistent MongoDB database and persistent Cloudinary/object storage for uploads, then use that HTTPS origin as `VITE_API_URL`. Add the final Vercel origins to backend `CORS_ORIGINS` before promoting the deployment.
+
+Temporary official-source records can be inserted once with `npm run seed:temporary` from `backend`. This seed uses stable IDs and `$setOnInsert`; rerunning it does not overwrite existing production records.
 
 ## Reverse proxy
 
@@ -63,4 +69,3 @@ Deploy `frontend/dist` to a static host and configure SPA fallback so unknown pa
 3. Switch traffic to the previous application release.
 4. If a later schema migration is introduced, use its documented non-destructive down/compatibility procedure.
 5. Verify `/health`, homepage rendering and an administrator login after rollback.
-

@@ -12,6 +12,7 @@ export interface INews extends Document {
   publishDate: Date;
   status: DocumentStatus;
   isFeatured: boolean;
+  displayOrder: number;
   tags: string[];
   attachments?: string[];
   seo: {
@@ -45,6 +46,7 @@ const NewsSchema: Schema = new Schema(
     publishDate: { type: Date, required: true },
     status: { type: String, enum: ['draft', 'published', 'archived'], default: 'draft' },
     isFeatured: { type: Boolean, default: false },
+    displayOrder: { type: Number, default: 0, min: 0 },
     tags: [{ type: String }],
     attachments: [{ type: String }],
     seo: {

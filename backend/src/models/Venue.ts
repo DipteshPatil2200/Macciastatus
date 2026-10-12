@@ -14,6 +14,7 @@ export interface IVenue extends Document {
   amenities: string[];
   images: string[];
   isActive: boolean;
+  displayOrder: number;
   seo: {
     title?: string;
     description?: string;
@@ -45,6 +46,7 @@ const VenueSchema: Schema = new Schema(
     amenities: [{ type: String }],
     images: [{ type: String }],
     isActive: { type: Boolean, default: true },
+    displayOrder: { type: Number, default: 0, min: 0 },
     seo: {
       title: { type: String },
       description: { type: String },

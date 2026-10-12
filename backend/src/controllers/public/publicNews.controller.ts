@@ -22,7 +22,7 @@ export const getPublishedNews = async (req: Request, res: Response, next: NextFu
     }
 
     const [news, total] = await Promise.all([
-      News.find(query).sort({ publishDate: -1 }).skip(skip).limit(Number(limit)),
+      News.find(query).sort({ displayOrder: 1, publishDate: -1 }).skip(skip).limit(Number(limit)),
       News.countDocuments(query),
     ]);
 

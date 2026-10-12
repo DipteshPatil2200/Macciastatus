@@ -21,6 +21,7 @@ export interface IEvent extends Document {
   status: EventStatus;
   category: { en: string; mr: string };
   isFeatured: boolean;
+  displayOrder: number;
   attachments?: string[];
   speaker?: {
     name: string;
@@ -80,6 +81,7 @@ const EventSchema: Schema = new Schema(
       mr: { type: String, required: true },
     },
     isFeatured: { type: Boolean, default: false },
+    displayOrder: { type: Number, default: 0, min: 0 },
     attachments: [{ type: String }],
     speaker: [
       {
